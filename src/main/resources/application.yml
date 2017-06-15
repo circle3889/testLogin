@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: twdLogin
+#  redis: 
+#    host: 169.56.68.111
+#    port: 19236
+#    password: 8f05223c-1311-4fc2-b5f8-38302c679092
+# config for service
+
+services:
+  redis: 
+    name: Redis-ma
+  session:
+    code: 'spring:session:sessions:'
+    attr: 'sessionAttr:tokenId'
+  command:
+    success: 'success'
+    error1: 'no session'
+    error2: 'expired session'
+    error3: 'is login'
+    error4: 'no token'
+    error5: 'token create error'
+    error6: 'token delete error'
+    
+eureka:  
+  instance:    
+    prefer-ip-address: true    
+    ip-address: ${CF_INSTANCE_IP}    
+    non-secure-port: ${CF_INSTANCE_PORT}
+    instance-id: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}    
+    lease-renewal-interval-in-seconds: 15  
+  client:    
+    region: default    
+    fetch-registry: true    
+    registry-fetch-interval-seconds: 30    
+    register-with-eureka: true    
+    service-url:      
+      defaultZone: ${vcap.services.DiscoveryService-i5.credentials.uri}/eureka/
+      
+#hystrix command 수행시간 변경(디폴트는 1000(1s)) 
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds:  60000
+#        timeout:
+#          enabled: true
+#        circuitBreaker:
+#          enabled: true
+#    threadpool:
+#      default:
+#        coreSize: 10    
+      

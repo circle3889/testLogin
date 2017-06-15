@@ -1,0 +1,13 @@
+---
+applications:
+- name: twdLogin
+  memory: 512M
+  instances: 1
+  path: ./target/twdLogin-0.0.1.war
+#  path: ./defaultServer
+  random-route: true
+  buildpack: liberty-for-java
+  services:
+    - Redis-ma
+  env:
+    JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
